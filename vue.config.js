@@ -18,5 +18,6 @@ module.exports = {
             .set('components', '@/components')
             .set('network', '@/network')
             .set('views', '@/views')
-    }
+    },
+    publicPath:'./'
 } 
