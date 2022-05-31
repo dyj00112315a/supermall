@@ -10,7 +10,7 @@ const Cart = () => import('../views/cart/Cart')
 const Profile = () => import('../views/profile/Profile')
 
 // 2.创建router
-const routes=[
+const routes = [
   {
     path: '',
     redirect: '/home'
@@ -34,7 +34,7 @@ const routes=[
 ]
 const router = new VueRouter({
   routes,
-  // mode:'hash'
+  mode: 'history'
 })
 
 export default router

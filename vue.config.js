@@ -11,12 +11,13 @@ module.exports = {
             .set('network', '@/network')
             .set('views', '@/views')
     },
-    publicPath:'./',
-    css:{
-        loaderOptions:{
-            scss:{
-                additionalData:`@import "~assets/scss/_variable.scss";`
+    publicPath: './',
+    css: {
+        loaderOptions: {
+            scss: {
+                additionalData: `@import "~assets/scss/_variable.scss";`
             }
         }
-    }
+    },
+    lintOnSave: false
 } 
