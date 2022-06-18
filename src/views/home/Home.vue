@@ -56,7 +56,10 @@ import FeatureView from './childComps/FeatureView.vue';
 import NavBar from "components/common/navbar/NavBar";
 import TabControl from 'components/content/tabControl/TabControl.vue';
 
-import { getHomeMultidata } from "network/home";
+import { 
+  getHomeMultidata,
+  getHomeGoods
+} from "network/home";
 
 
 export default {
@@ -72,6 +75,11 @@ export default {
     return {
       banners: [],
       recommends: [],
+      goods:{
+        'pop':{page:0,list:[]},
+        'news':{page:0,list:[]},
+        'sell':{page:0,list:[]},
+      }
     };
   },
   created () {
@@ -80,6 +88,10 @@ export default {
       this.banners = res.data.banner.list;
       this.recommends = res.data.recommend.list;
     });
+
+    getHomeGoods('pop',1).then(res=>{
+      console.log(res);
+    })
   },
 };
 </script>
