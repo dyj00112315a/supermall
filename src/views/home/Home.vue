@@ -8,7 +8,7 @@
     <home-swiper :banners="banners" />
     <recommend-view :recommends="recommends" />
     <feature-view />
-    <tab-control :titles="['流行','新款','精选']" class="tab-control"/>
+    <tab-control :titles="['流行', '新款', '精选']" class="tab-control" />
     <ul>
       <li>列表1</li>
       <li>列表2</li>
@@ -56,7 +56,7 @@ import FeatureView from './childComps/FeatureView.vue';
 import NavBar from "components/common/navbar/NavBar";
 import TabControl from 'components/content/tabControl/TabControl.vue';
 
-import { 
+import {
   getHomeMultidata,
   getHomeGoods
 } from "network/home";
@@ -75,24 +75,33 @@ export default {
     return {
       banners: [],
       recommends: [],
-      goods:{
-        'pop':{page:0,list:[]},
-        'news':{page:0,list:[]},
-        'sell':{page:0,list:[]},
+      goods: {
+        'pop': { page: 0, list: [] },
+        'news': { page: 0, list: [] },
+        'sell': { page: 0, list: [] },
       }
     };
   },
   created () {
-    getHomeMultidata().then((res) => {
-      console.log(res);
-      this.banners = res.data.banner.list;
-      this.recommends = res.data.recommend.list;
-    });
+    // 1.请求多个数据
+    this.getHomeMultidata();
 
-    getHomeGoods('pop',1).then(res=>{
-      console.log(res);
-    })
+    // 2.请求商品数据
+    this.getHomeGoods('pop');
+    this.getHomeGoods('new');
+    this.getHomeGoods('sell');
   },
+  methods: {
+    getHomeMultidata () {
+      getHomeMultidata().then((res) => {
+        console.log(res);
+        this.banners = res.data.banner.list;
+        this.recommends = res.data.recommend.list;
+      });
+    },
+
+
+  }
 };
 </script>
 
@@ -100,6 +109,7 @@ export default {
 #home {
   padding-top: 44px;
 }
+
 .home-nav {
   background-color: $tint;
   color: #fff;
@@ -110,8 +120,9 @@ export default {
   top: 0;
   z-index: 999;
 }
-.tab-control{
+
+.tab-control {
   position: sticky;
-  top:44px;
+  top: 44px;
 }
 </style>
