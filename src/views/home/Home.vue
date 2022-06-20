@@ -50,17 +50,13 @@
 
 <script>
 import HomeSwiper from "./childComps/HomeSwiper.vue";
-import RecommendView from './childComps/RecommendView.vue'
-import FeatureView from './childComps/FeatureView.vue';
+import RecommendView from "./childComps/RecommendView.vue";
+import FeatureView from "./childComps/FeatureView.vue";
 
 import NavBar from "components/common/navbar/NavBar";
-import TabControl from 'components/content/tabControl/TabControl.vue';
+import TabControl from "components/content/tabControl/TabControl.vue";
 
-import {
-  getHomeMultidata,
-  getHomeGoods
-} from "network/home";
-
+import { getHomeMultidata, getHomeGoods } from "network/home";
 
 export default {
   name: "Home",
@@ -71,37 +67,42 @@ export default {
     FeatureView,
     TabControl,
   },
-  data () {
+  data() {
     return {
       banners: [],
       recommends: [],
       goods: {
-        'pop': { page: 0, list: [] },
-        'news': { page: 0, list: [] },
-        'sell': { page: 0, list: [] },
-      }
+        pop: { page: 0, list: [] },
+        new: { page: 0, list: [] },
+        sell: { page: 0, list: [] },
+      },
     };
   },
-  created () {
+  created() {
     // 1.请求多个数据
     this.getHomeMultidata();
 
     // 2.请求商品数据
-    this.getHomeGoods('pop');
-    this.getHomeGoods('new');
-    this.getHomeGoods('sell');
+    this.getHomeGoods("pop");
+    this.getHomeGoods("new");
+    this.getHomeGoods("sell");
   },
   methods: {
-    getHomeMultidata () {
+    getHomeMultidata() {
       getHomeMultidata().then((res) => {
         console.log(res);
         this.banners = res.data.banner.list;
         this.recommends = res.data.recommend.list;
       });
     },
-
-
-  }
+    getHomeGoods(type) {
+      const page = this.goods[type].page + 1;
+      getHomeGoods(type, page).then((res) => {
+        this.goods[type].list.push(...res.data.list);
+        this.goods[type].page += 1;
+      });
+    },
+  },
 };
 </script>
 
