@@ -9,6 +9,7 @@
     <recommend-view :recommends="recommends" />
     <feature-view />
     <tab-control :titles="['流行', '新款', '精选']" class="tab-control" />
+    <goods-list :goods="goods['pop'].list" />
     <ul>
       <li>列表1</li>
       <li>列表2</li>
@@ -53,8 +54,10 @@ import HomeSwiper from "./childComps/HomeSwiper.vue";
 import RecommendView from "./childComps/RecommendView.vue";
 import FeatureView from "./childComps/FeatureView.vue";
 
+// 导入子组件
 import NavBar from "components/common/navbar/NavBar";
 import TabControl from "components/content/tabControl/TabControl.vue";
+import GoodsList from "components/content/goods/GoodsList.vue";
 
 import { getHomeMultidata, getHomeGoods } from "network/home";
 
@@ -66,8 +69,9 @@ export default {
     RecommendView,
     FeatureView,
     TabControl,
+    GoodsList
   },
-  data() {
+  data () {
     return {
       banners: [],
       recommends: [],
@@ -78,7 +82,7 @@ export default {
       },
     };
   },
-  created() {
+  created () {
     // 1.请求多个数据
     this.getHomeMultidata();
 
@@ -88,14 +92,13 @@ export default {
     this.getHomeGoods("sell");
   },
   methods: {
-    getHomeMultidata() {
+    getHomeMultidata () {
       getHomeMultidata().then((res) => {
-        console.log(res);
         this.banners = res.data.banner.list;
         this.recommends = res.data.recommend.list;
       });
     },
-    getHomeGoods(type) {
+    getHomeGoods (type) {
       const page = this.goods[type].page + 1;
       getHomeGoods(type, page).then((res) => {
         this.goods[type].list.push(...res.data.list);
