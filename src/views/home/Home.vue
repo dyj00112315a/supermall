@@ -8,44 +8,8 @@
     <home-swiper :banners="banners" />
     <recommend-view :recommends="recommends" />
     <feature-view />
-    <tab-control :titles="['流行', '新款', '精选']" class="tab-control" />
-    <goods-list :goods="goods['pop'].list" />
-    <ul>
-      <li>列表1</li>
-      <li>列表2</li>
-      <li>列表3</li>
-      <li>列表4</li>
-      <li>列表5</li>
-      <li>列表6</li>
-      <li>列表7</li>
-      <li>列表8</li>
-      <li>列表9</li>
-      <li>列表10</li>
-      <li>列表11</li>
-      <li>列表12</li>
-      <li>列表13</li>
-      <li>列表14</li>
-      <li>列表15</li>
-      <li>列表16</li>
-      <li>列表17</li>
-      <li>列表18</li>
-      <li>列表19</li>
-      <li>列表20</li>
-      <li>列表21</li>
-      <li>列表22</li>
-      <li>列表23</li>
-      <li>列表24</li>
-      <li>列表25</li>
-      <li>列表26</li>
-      <li>列表27</li>
-      <li>列表28</li>
-      <li>列表29</li>
-      <li>列表30</li>
-      <li>列表31</li>
-      <li>列表32</li>
-      <li>列表33</li>
-      <li>列表34</li>
-    </ul>
+    <tab-control :titles="['流行', '新款', '精选']" class="tab-control" @tabClick="tabClick" />
+    <goods-list :goods="currentGoods" />
   </div>
 </template>
 
@@ -69,7 +33,7 @@ export default {
     RecommendView,
     FeatureView,
     TabControl,
-    GoodsList
+    GoodsList,
   },
   data () {
     return {
@@ -80,7 +44,13 @@ export default {
         new: { page: 0, list: [] },
         sell: { page: 0, list: [] },
       },
+      currentType: 'pop',
     };
+  },
+  computed: {
+    currentGoods () {
+      return this.goods[this.currentType].list;
+    }
   },
   created () {
     // 1.请求多个数据
@@ -92,6 +62,17 @@ export default {
     this.getHomeGoods("sell");
   },
   methods: {
+    /**
+     * 事件监听相关的方法
+     */
+    tabClick (index) {
+      this.currentType = Object.keys(this.goods)[index];
+    },
+
+
+    /**
+     * 网络请求相关的方法
+     */
     getHomeMultidata () {
       getHomeMultidata().then((res) => {
         this.banners = res.data.banner.list;
@@ -105,6 +86,7 @@ export default {
         this.goods[type].page += 1;
       });
     },
+
   },
 };
 </script>
