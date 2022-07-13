@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" @scroll.capture="scroll">
     <router-view />
     <main-tab-bar />
   </div>
