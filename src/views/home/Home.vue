@@ -9,7 +9,7 @@
     <recommend-view :recommends="recommends" />
     <feature-view />
     <tab-control :titles="['流行', '新款', '精选']" class="tab-control" />
-    <goods-list :goods="goods['pop'].list" />
+    <goods-list :goods="currentGoods" />
     <back-top @click.native="backClick" v-show="isBackTopShow" />
   </div>
 </template>
@@ -50,6 +50,11 @@ export default {
       isBackTopShow: false,
     };
   },
+  computed: {
+    currentGoods () {
+      return this.goods[this.currentType].list;
+    }
+  },
   created () {
     // 1.请求多个数据
     this.getHomeMultidata();
@@ -60,6 +65,17 @@ export default {
     this.getHomeGoods("sell");
   },
   methods: {
+    /**
+     * 事件监听相关的方法
+     */
+    tabClick (index) {
+      this.currentType = Object.keys(this.goods)[index];
+    },
+
+
+    /**
+     * 网络请求相关的方法
+     */
     getHomeMultidata () {
       getHomeMultidata().then((res) => {
         this.banners = res.data.banner.list;
