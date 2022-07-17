@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import { Button, PullRefresh, Toast } from 'vant'
+import { Button, PullRefresh, Toast, List, Card } from 'vant'
 
 Vue.config.productionTip = false
 
@@ -9,6 +9,8 @@ Vue.config.productionTip = false
 Vue.use(Button)
 Vue.use(PullRefresh)
 Vue.use(Toast)
+Vue.use(List)
+Vue.use(Card)
 
 new Vue({
   render: h => h(App),

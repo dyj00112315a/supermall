@@ -48,6 +48,7 @@ export default {
         sell: { page: 0, list: [] },
       },
       isBackTopShow: false,
+      currentType: "pop"
     };
   },
   computed: {
